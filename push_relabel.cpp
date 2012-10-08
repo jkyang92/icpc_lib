@@ -41,6 +41,7 @@ void maxflow(T capacity,int node_count,T flow) {
     for(int i=0;i<node_count;i++){
         flow[0][i]=capacity[0][i];
         excess[i] = capacity[0][i];
+        in_queue[i]=false;
         if(excess[i]!=0){
             if(i!=0 && i!=node_count-1){
                 remain++;
