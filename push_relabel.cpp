@@ -13,7 +13,7 @@ using namespace std;
  * OUT: flow
  * Algorithm: push-relabel (highest active vertex)
  * Time Complexity: O(V^2 sqrt(E)) (V=node_count,E=edges)
- * Space Complexity: O(V)
+ * Space Complexity: O(V+E)
  */
 template<typename T>
 void maxflow(T capacity,int node_count,T flow) {
