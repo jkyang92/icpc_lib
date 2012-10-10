@@ -12,20 +12,17 @@ node nodes[MAXNODES];
 int prev[MAXNODES];
 int source = 0, sink = 1, begin = 2;
 
-bool bfs()
-{
+bool bfs(){
 	fill(prev, prev+MAXNODES, -1);
 	queue<int> q;
 	q.push(source);
 	prev[source] = source;
-	while(!q.empty())
-	{
+	while(!q.empty()){
 		int c = q.front(); q.pop();
 		if(c==sink)
 			return true;
 		node n = nodes[c];
-		for(node::iterator i = nodes[c].begin(); i != nodes[c].end(); i++)
-		{
+		for(node::iterator i = nodes[c].begin(); i != nodes[c].end(); i++){
 			int to = i->first;
 			if(nodes[c][to]<=0 || prev[to]>=0)
 				continue;
@@ -33,29 +30,21 @@ bool bfs()
 			prev[to] = c;
 		}
 	}
-
 	return false;
 }
 
-int update()
-{
+int update(){
 	int ret = INT_MAX;
 	for(int cur = sink, pr = prev[cur]; cur !=source; cur = prev[cur], pr = prev[cur])
-	{
 		ret = min(ret, nodes[pr][cur]);
-	}
 	for(int cur = sink, pr = prev[cur]; cur !=source; cur = prev[cur], pr = prev[cur])
 			nodes[pr][cur]-=ret, nodes[cur][pr]+=ret;
 	return ret;
 }
 
-int maxFlow()
-{
-	int flow=0;
-	while(bfs())
-	{
-		flow+=update();
-	}
+int maxFlow(){
+	int flow;
+	for(flow=0; bfs(); flow+=update()){}
 	return flow;
 }
 
@@ -65,7 +54,7 @@ int main()
 	scanf("%d",&t);
 	for(int i=0; i < t; i++)
 	{
-		for_each(nodes, nodes + MAXNODES-1, mem_fun_ref(&node::clear));
+		for_each(nodes, nodes + MAXNODES-1, mem_fun_ref(&node::clear)); //NEEDED
 
 		//ADD EDGES (SAMPLE USAGE)
 		scanf("%d",&n);
@@ -89,7 +78,7 @@ int main()
 			{
 				if(mnums[j]==0 || (nnums[k]>0 && (mnums[j]%nnums[k])==0))
 				{
-					nodes[begin+k][begin+n+j] = 99999;
+					nodes[begin+k][begin+n+j] = INT_MAX;
 				}
 			}
 		}
