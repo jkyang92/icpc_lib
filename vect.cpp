@@ -82,7 +82,11 @@ public:
         return ret;
     }
     //L_1 norm, or taxi-cab norm
-    T onenorm() const { return accumulate(val,val+n,0); }
+    T onenorm() const {
+        T ret = 0;
+        for(int i=0;i<n;i++) ret += abs(val[i]);
+        return ret;
+    }
 };
 
 //Core Global Functions
