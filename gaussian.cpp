@@ -1,26 +1,28 @@
 
 #include <cmath>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-/*does gaussian elimination in place in the nxn matrix, agumented with k columns
+/*does gaussian elimination in place in the nxm matrix
  *A[r][c] should be row r, col c
  *returns true if the processes succeeds
  *uses partial pivoting, so reasonably stable with floating point if nessary
- *runtime: O(n^3+kn^2)
+ *runtime: O(nm^2)
  *DO NOT use with int, use with either doubles or rationals, rationals suggested
  *the resulting matrix will always be in row-reduced echelon form
  *returns the non-pivot columns
  */
 template<typename T>
-vector<int> gaussian_elimination(T** A,int n, int k){
+vector<int> gaussian_elimination(T** A,int n, int m){
     vector<int> ret;
-    for(int c=0;c<n;c++){
+    int p_row=0;
+    for(int c=0;c<m;c++){
         //find piviot
         int pivot = -1;
         T pivotValue = 0;
-        for(int r=c;r<n;r++){
+        for(int r=p_row;r<n;r++){
             if(abs(A[r][c])>pivotValue){
                 pivotValue = abs(A[r][c]);
                 pivot = r;
@@ -30,25 +32,23 @@ vector<int> gaussian_elimination(T** A,int n, int k){
             ret.push_back(c);
             continue;
         }
-        if(c!=pivot){
-            T* temp = A[c];
-            A[c]=A[pivot];
-            A[pivot]=temp;
-        }
-        pivotValue = A[c][c];
+        if(p_row!=pivot)
+            swap_ranges(A[p_row],A[p_row]+n,A[pivot]);
+        pivotValue = A[p_row][c];
         for(int r=0;r<n;r++){
             if(r==c)
                 continue;
             T multiplier = A[r][c]/pivotValue;
             if(multiplier!=0)
-                for(int i=c+1;i<n+k;i++)
+                for(int i=c+1;i<m;i++)
                     A[r][i]-=A[r][i]*multiplier;
             A[r][c]=0;
         }
         //set pivot to 1
-        A[c][c]=1;
-        for(int i=c+1;i<n+k;i++)
-            A[c][i]/=pivotValue;
+        A[p_row][c]=1;
+        for(int i=p_row+1;i<m;i++)
+            A[p_row][i]/=pivotValue;
+        p_row++;
     }
     return ret;
 }
@@ -58,7 +58,7 @@ vector<int> gaussian_elimination(T** A,int n, int k){
 template<typename T>
 vector<T*> find_homogeneous_solutions(T** A,int n){
     vector<T*> ret;
-    vector<int> non_pivots = gaussian_elimination(A,n,0);
+    vector<int> non_pivots = gaussian_elimination(A,n,n);
     vector<int> pivots;
     int index = 0;
     for(int i=0;i<n;i++){
