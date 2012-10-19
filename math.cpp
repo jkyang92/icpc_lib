@@ -9,10 +9,7 @@ typedef long long ll;
 ull gcd(ull a, ull b){ return a==0 ? b : gcd(b%a,a); }
 //returns a pair (x,y) such that ax+by=gcd(a,b)
 pair<ll,ll> egcd(ll a, ll b){
-    ll x=0,x_prev=1;
-    ll y=1,y_prev=0;
-    ll a_curr=a;
-    ll b_curr=b;
+    ll x=0,x_prev=1,y=1,y_prev=0,a_curr=a,b_curr=b;
     while(b_curr!=0){
         ll q = a_curr/b_curr;
         ll r = a_curr%b_curr;
@@ -36,21 +33,19 @@ ull factorial(int n){
 
 //n choose m
 //tries hard not to overflow
+//runtime is O(M log M) where M=min(m,n-m) but for any M that could even have
+//an issue, the resulting value is too large to fit in a long long
 ull binom(ull n,ull m){
-    if(m<n/2) return binom(n,n-m);
-    //compute n_{(m)}/m!
-    ull upper_index=(n-m)+1;
-    ull lower_index=2;
-    ull ret=1;
-    while(lower_index<=m || upper_index<=n){
-        if(ret%lower_index==0 && lower_index<=m){
-            ret/=lower_index;
-            lower_index++;
-        }
-        else if(upper_index<=n){
-            ret*=upper_index;
-            upper_index++;
-        }
+    if(2*m>n) return binom(n,n-m);
+    ull upper=(n-m)+1,lower=2,ret=1,denom=1;
+    while(lower<=m || upper<=n){
+        if((denom>ret || lower>n) && upper<=m)
+            ret*=upper++;
+        else if(lower<=n)
+            denom*=lower++;
+        ull g = gcd(ret,denom);
+        ret/=g;
+        denom/=g;
     }
     return ret;
 }
