@@ -31,7 +31,8 @@ vector<int> gaussian_elimination(T** A,int n, int m,T *pdet){
         }
         if(p_value==0){
             ret.push_back(c);
-            det = 0;
+            if(p_row!=n)
+                det = 0;
             continue;
         }
         if(p_row!=pivot){
