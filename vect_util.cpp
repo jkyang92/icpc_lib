@@ -1,4 +1,7 @@
 #include "vect.cpp"
+#include <cstdarg>
+
+using namespace std;
 
 //additional utilities for vect.cpp
 template<typename T>
@@ -14,5 +17,16 @@ template<typename T,int n,int m>
 vect<T,n> change_dim(const vect<T,m>& v){
     vect<T,n> ret;
     for(int i=0;i<min(n,m);i++) ret[i] = v[i];
+    return ret;
+}
+template<typename T,int n>
+vect<T,n> make_vect(T first,...){
+    va_list args;
+    vect<T,n> ret;
+    ret[0]=first;
+    va_start(args,first);
+    for(int i=1;i<n;i++)
+        ret[i]=va_arg(args,T);
+    va_end(args);
     return ret;
 }
