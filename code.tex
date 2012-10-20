@@ -1,0 +1,39 @@
+%% This tex file reads files.lst and generates the pdf from the files listed
+%% in there, don't run this directly instead run the Makefile
+
+
+\documentclass{article}
+\usepackage{fancyvrb}
+
+%%Margins
+\oddsidemargin 0.0in
+\evensidemargin 0.0in
+\textwidth 6.5in
+\voffset -0.5in
+\textheight 9in
+
+\def\cleanws#1 {#1}
+\def\stripslash#1#2\ssend{#2}
+\def\makesane[#1]{\expandafter\expandafter\expandafter\stripslash\expandafter\string\csname#1\endcsname\ssend}
+
+\begin{document}
+\newread\fstream
+\openin\fstream=files.lst
+\loop
+\def\test{a}
+\ifeof\fstream
+\def\test{\relax}
+\fi
+\if a\test
+\read\fstream to \fname
+\if\fname\par
+\relax
+\else
+\edef\fname{\expandafter\cleanws\fname}
+\edef\fname{\makesane[\fname]}
+\VerbatimInput[numbers=left,frame=lines,label=\fname,labelposition=all,fontsize=\small]{\fname}
+\newpage
+\fi
+\repeat
+
+\end{document}
