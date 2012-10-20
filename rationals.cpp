@@ -150,7 +150,6 @@ bool operator>=(const rational& r,const rational& s){ return !(r<s);}
 bool operator>(const rational& r,const rational& s){ return s<r;}
 bool operator!=(const rational& r,const rational& s){ return !(r==s);}
 
-//TODO figure out a way to avoid the casts on zero
 ll floor(const rational& r){
     //the equals part is important, otherwise, weird things happen with 0
     if(r>=0) return r.numerator()/r.denominator();
