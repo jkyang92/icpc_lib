@@ -1,6 +1,6 @@
 //#include "vect.cpp"
+//#include "vect_util.cpp"
 #include "gram_schmidt.cpp"
-#include "vect_util.cpp"
 #include <vector>
 
 template<typename T,int n>

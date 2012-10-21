@@ -30,3 +30,14 @@ vect<T,n> make_vect(T first,...){
     va_end(args);
     return ret;
 }
+
+//project a onto b
+template<typename T,int d>
+vect<T,d> proj(vect<T,d> a,vect<T,d> b){
+    return ((a*b)/(b*b))*b;
+}
+
+template<typename T,int n>
+vect<T,n> orth_proj(const vect<T,n>& a, const vect<T,n>& b){
+    return a-proj(a,b);
+}

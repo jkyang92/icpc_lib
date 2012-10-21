@@ -1,14 +1,9 @@
 
 #include "vect.cpp"
+#include "vect_util.cpp"
 #include <cmath>
 #include <cassert>
 #include <vector>
-
-//project a onto b
-template<typename T,int d>
-vect<T,d> proj(vect<T,d> a,vect<T,d> b){
-    return ((a*b)/(b*b))*b;
-}
 
 #ifndef EPSILON
 #define EPSILON 1e-10
