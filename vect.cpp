@@ -1,3 +1,6 @@
+#ifndef VECT_CPP_GUARD
+#define VECT_CPP_GUARD
+
 #include <numeric>
 #include <algorithm>
 #include <functional>
@@ -62,3 +65,5 @@ template<typename T, int n>
 vect<T,n> operator*(const T& k, const vect<T,n>& a){ return a*k; }
 template<typename T, int n>
 vect<T,n> operator/(const T& k, const vect<T,n>& a){ return a/k; }
+
+#endif
