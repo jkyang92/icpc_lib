@@ -3,11 +3,6 @@
 #include "gram_schmidt.cpp"
 #include <vector>
 
-template<typename T,int n>
-vect<T,n> orth_proj(const vect<T,n>& a, const vect<T,n>& b){
-    return a-proj(a,b);
-}
-
 //it's assumed that everything is a basis
 template<typename T,int n>
 vector<vect<T,n> > intersect_subspaces(vector<vect<T,n> >A, vector<vect<T,n> > B){
