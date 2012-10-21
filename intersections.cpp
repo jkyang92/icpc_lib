@@ -10,10 +10,11 @@ using namespace std;
 
 typedef vect<double,2> point;
 
+//note, will return false if the two circles have the same center
 bool circle_intersection(point c1, double r1, point c2, double r2,pair<point,point>& ints){
     if(r1<r2) return circle_intersection(c2,r2,c1,r1,ints);
     double d2 = (c1-c2).norm();
-    if(d2-(r1+r2)*(r1+r2)>EPSILON || (r1-r2)*(r1-r2)-d2>EPSILON)
+    if(d2<EPSILON || d2-(r1+r2)*(r1+r2)>EPSILON || (r1-r2)*(r1-r2)-d2>EPSILON)
         return false;
     double a = ((r1*r1-r2*r2)/d2+1)/2;
     vect<double,2> v1 = a*(c1-c2);
