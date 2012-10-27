@@ -73,12 +73,13 @@ void grahamScan(Point* points, int length, Point minPoint) {
 
 	int m = 1;
 	for(int i = 2; i < length; i++){
-		while(crossProduct(points[m-1],points[m-1],points[m],points[i])<=0)
+		while(i<length && crossProduct(points[m-1],points[m-1],points[m],points[i])<=0)
 			if(m==1)	//Check if first points are collinear, if so ignore unnecessary points.
 				points[m]=points[i++];
 			else
 				m--;
-		points[++m]=points[i];
+		if(i!=length)
+			points[++m]=points[i];
 	}
 }
 
