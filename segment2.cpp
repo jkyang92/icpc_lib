@@ -47,13 +47,14 @@ bool doSegmentsIntersect(Segment one, Segment two){
 	return doSegmentsIntersects(one, two)!='0';
 }
 
+//Assumes p is already on the line one
 bool isPointBetweenSegment(Segment one, point p){
 	if ( abs(one.start[0] - one.end[0])>ep )
-		return ((one.start[0] <= p[0]) && (p[0] <= one.end[0])) ||
-				((one.start[0] >= p[0]) && (p[0] >= one.end[0]));
+		return 	((one.start[0] <= p[0]) && (p[0] <= one.end[0])) ||
+			((one.start[0] >= p[0]) && (p[0] >= one.end[0]));
 	else
-		return ((one.start[1] <= p[1]) && (p[1] <= one.end[1])) ||
-				((one.start[1] >= p[1]) && (p[1] >= one.end[1]));
+		return 	((one.start[1] <= p[1]) && (p[1] <= one.end[1])) ||
+			((one.start[1] >= p[1]) && (p[1] >= one.end[1]));
 }
 
 //return 0 for no parallel intersection, e for if they overlap at an edge
@@ -91,8 +92,8 @@ char doSegmentsIntersects(Segment one, Segment two){
 		return parallelSegmentIntersection(one, two);
 
 	num = 	one.start[0]	* ( two.end[1]		- two.start[1] ) +
-			two.start[0]	* ( one.start[1]	- two.end[1] 	) +
-			two.end[0]		* ( two.start[1]	- one.start[1] );
+		two.start[0]	* ( one.start[1]	- two.end[1]   ) +
+		two.end[0]	* ( two.start[1]	- one.start[1] );
 
 	if( (abs(num) <ep) || (abs(num -denom)<ep) )
 		code = 'v';
@@ -100,19 +101,19 @@ char doSegmentsIntersects(Segment one, Segment two){
 	s = num / denom;
 
 	num = -(one.start[0]	* ( two.start[1]	- one.end[1]	) +
-			one.end[0]		* ( one.start[1]	- two.start[1]	) +
-			two.start[0]	* ( one.end[1]		- one.start[1] ));
+		one.end[0]	* ( one.start[1]	- two.start[1]	) +
+		two.start[0]	* ( one.end[1]		- one.start[1] ));
 
 	if( (abs(num) <ep) || (abs(num -denom)<ep) )
 		code = 'v';
 
 	t = num / denom;
 
-	if	  ( (0.0 < s) && (s < 1.0) &&
-			(0.0 < t) && (t < 1.0) )
+	if	( (0.0 < s) && (s < 1.0) &&
+		(0.0 < t) && (t < 1.0) )
 		code = '1';
 	else if ( (0.0 > s) || (s > 1.0) ||
-			(0.0 > t) || (t > 1.0) )
+		(0.0 > t) || (t > 1.0) )
 		code = '0';
 
 	return code;
@@ -127,14 +128,14 @@ int getIntersectionPoint(double x1, double y1, double x2, double y2, double x3, 
 		return -1;
 
 	num = 	x1	* ( y4	- y3 ) +
-			x3	* ( y1	- y4 ) +
-			x4	* ( y3	- y1 );
+		x3	* ( y1	- y4 ) +
+		x4	* ( y3	- y1 );
 
 	s = num / denom;
 
 	num = -(x1	* ( y3	- y2 ) +
-			x2	* ( y1	- y3 ) +
-			x3	* ( y2	- y1 ));
+		x2	* ( y1	- y3 ) +
+		x3	* ( y2	- y1 ));
 
 	ipt = make_vect<double,2>(x1 + s * ( x2 - x1 ), y1 + s * ( y2 - y1 ));
 	return 0;

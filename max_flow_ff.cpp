@@ -20,13 +20,26 @@ void addEdgeCap(int i, int j, int cap, int nCnt){
 	int iOut = begin+nCnt+i;
 	int jIn = begin+j;
 	nodes[iOut][jIn] = cap;
+	nodes[jIn][iOut] = 0;
 }
-
 //Used to add an edge between in and out nodes to a graph that splits nodes into two.
 void addNodeCap(int i, int cap, int nCnt){
 	int iIn = begin+i;
 	int iOut = iIn + nCnt;
 	nodes[iIn][iOut] = cap;
+	nodes[iOut][iIn] = 0;
+}
+//Add edge from source
+void addSourceCap(int i, int cap){
+	int iIn = begin+i;
+	nodes[source][iIn] = cap;
+	nodes[iIn][source] = 0;
+}
+//Add edge to sink
+void addSinkCap(int i, int cap, int nCnt){
+	int iOut = begin+i+nCnt;
+	nodes[iOut][sink] = cap;
+	nodes[sink][iOut] = 0;
 }
 
 bool bfs(){
