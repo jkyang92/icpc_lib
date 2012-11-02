@@ -24,6 +24,35 @@ int lis(int* nums, int len){
 	return maxs;
 }
 
+/**
+ * Same as above, but more useful because you get the numbers in the sequence
+ * The index of the maximum element is maxi, and you work back from there using prev
+ * Remember to reverse the list and run longest decreasing sequence if you want to get the list is the right order
+ */
+int prev[30];
+int maxi;
+int lis(int len){
+	int maxs = 1;
+	maxi=0;
+	for(int i = 0; i < len; i++){
+		ls[i]=1;
+		prev[i]=-1;
+		for(int j = 0; j < i; j++){
+			if(isIn(boxes[i],boxes[j])){
+				if(ls[j]+1>ls[i]){
+					prev[i]=j;
+					ls[i] = ls[j]+1;
+				}
+				if(ls[i]>maxs){
+					maxs = ls[i];
+					maxi = i;
+				}
+			}
+		}
+	}
+	return maxs;
+}
+
 const int maxWeights = 100;
 const int maxLoad = 100;
 int m[maxWeights][maxLoad+1];
@@ -73,7 +102,7 @@ int lisOptim(int* nums, int len)
 	//the ending point
 	for (int i = 1; i < len; i++){
 		// If next element nums[i] is greater than last element of current longest subsequence nums[b.back()], just push it at back of "b" and continue
-		if (nums[b[bsize-1]] < nums[i]){
+		if (nums[b[bsize-1]] < nums[i]){//REPLACE WITH CUSTOM COMPARISON HERE IF NEEDED
 			p[i] = b[bsize-1];
 			b[bsize]=i;
 			bsize++;
@@ -84,11 +113,11 @@ int lisOptim(int* nums, int len)
 		// Note : Binary search is performed on b (and not a). Size of b is always <=k and hence contributes O(log k) to complexity.    
 		for (u = 0, v =bsize-1; u < v;){
 			int c = (u + v) / 2;
-			if (nums[b[c]] < nums[i]) u=c+1; else v=c;
+			if (nums[b[c]] < nums[i]) u=c+1; else v=c;//REPLACE WITH CUSTOM COMPARISON HERE IF NEEDED
 		}
 
 		// Update b if new value is smaller then previously referenced value 
-		if (nums[i] < nums[b[u]]){
+		if (nums[i] < nums[b[u]]){//REPLACE WITH CUSTOM COMPARISON IF NEEDED
 			if (u > 0)
 				p[i] = b[u-1];
 			b[u]= i;
