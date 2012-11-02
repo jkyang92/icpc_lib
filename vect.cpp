@@ -10,7 +10,7 @@ class vect{
     T val[n];
 public:
     //always constructs the zero vector
-    vect(){ fill_n(val,n,0); }
+    vect(){ fill_n(val,n,(T)0); }
     vect(const vect<T,n>& other){ copy(other.val,other.val+n,val);}
     vect<T,n>& operator=(const vect<T,n>& other){
         if(&other==this) return *this;
@@ -35,7 +35,7 @@ public:
     bool operator==(const vect<T,n>& other) const{ return equal(val,val+n,other.val); }
     bool operator!=(const vect<T,n>& other) const{ return !(this==other); }
     //dot product
-    T operator*(const vect<T,n>& other) const{ return inner_product(val,val+n,other.val,0); }
+    T operator*(const vect<T,n>& other) const{ return inner_product(val,val+n,other.val,(T)0); }
 #define S_OP(op)                                             \
     vect<T,n>& operator op ## =(const T& k){                 \
         for(int i=0;i<n;i++) val[i] op ## = k;               \
