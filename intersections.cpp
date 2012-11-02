@@ -22,8 +22,8 @@ bool circle_intersection(point c1, double r1, point c2, double r2,pair<point,poi
     if(r1*r1/d2-a*a>0)
         h = sqrt(r1*r1/d2-a*a);
     vect<double,2> v2 = make_vect<double,2>((c1-c2)[1],-(c1-c2)[0])*h;
-    ints.first = c1+v1+v2;
-    ints.second = c1+v1-v2;
+    ints.first = c1-v1+v2;
+    ints.second = c1-v1-v2;
     return true;
 }
 

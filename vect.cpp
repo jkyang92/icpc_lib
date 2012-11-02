@@ -10,7 +10,7 @@ class vect{
     T val[n];
 public:
     //always constructs the zero vector
-    vect(){ fill_n(val,n,0); }
+    vect(){ fill_n(val,n,(T)0); }
     vect(const vect<T,n>& other){ copy(other.val,other.val+n,val);}
     vect<T,n>& operator=(const vect<T,n>& other){
         if(&other==this) return *this;
