@@ -3,7 +3,6 @@
 #include <map>
 #include <queue>
 #include <algorithm>
-
 using namespace std;
 
 typedef map<int,int> node;
@@ -79,8 +78,7 @@ int maxFlow(){
 }
 
 
-void minCutBfs()
-{
+void minCutBfs(){
 	bool marked[MAXNODES];
 	fill(marked,marked+MAXNODES,false);
 	minCut.clear();
@@ -107,45 +105,6 @@ void minCutBfs()
 	printf("\n");
 }
 
-int main()
-{
-	int t,n,m;
-	scanf("%d",&t);
-	for(int i=0; i < t; i++)
-	{
-		for_each(nodes, nodes + MAXNODES-1, mem_fun_ref(&node::clear)); //NEEDED
-
-		//ADD EDGES (SAMPLE USAGE)
-		scanf("%d",&n);
-
-		int nnums[200], mnums[200];
-		for(int j=0; j < n;j++)
-		{
-			scanf("%d",&(nnums[j]));
-			nodes[source][begin+j]=1;
-		}
-
-		scanf("%d",&m);
-
-		for(int j=0; j < m;j++)
-		{
-			scanf("%d",&(mnums[j]));
-
-			nodes[begin+n+j][sink]=1;
-
-			for(int k=0; k < n;k++)
-			{
-				if(mnums[j]==0 || (nnums[k]>0 && (mnums[j]%nnums[k])==0))
-				{
-					nodes[begin+k][begin+n+j] = INT_MAX;
-				}
-			}
-		}
-
-		printf("Case %d: %d\n",(i+1), maxFlow());
-		printf("Min Cut: ");
-		minCutBfs();
-	}
-
-	return 0;
+int main(){
+	for_each(nodes, nodes + MAXNODES-1, mem_fun_ref(&node::clear)); //NEEDED	
 }
