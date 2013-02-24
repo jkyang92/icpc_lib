@@ -34,7 +34,8 @@ void Point::setVals () const{
 
 
 int crossProduct(Point& start1, Point& start2, Point& end1, Point& end2){
-	double crossProduct = (end1.x-start1.x)*(end2.y-start2.y)-(end1.y-start1.y)*(end2.x-start2.x);
+	double crossProduct = (end1.x-start1.x)*(end2.y-start2.y)
+        -(end1.y-start1.y)*(end2.x-start2.x);
 	return crossProduct < -1E-14 ? -1 : (crossProduct > 1E-14 ? 1 : 0);
 }
 

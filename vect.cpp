@@ -35,7 +35,8 @@ public:
     bool operator==(const vect<T,n>& other) const{ return equal(val,val+n,other.val); }
     bool operator!=(const vect<T,n>& other) const{ return !(this==other); }
     //dot product
-    T operator*(const vect<T,n>& other) const{ return inner_product(val,val+n,other.val,(T)0); }
+    T operator*(const vect<T,n>& other) const{
+        return inner_product(val,val+n,other.val,(T)0);}
 #define S_OP(op)                                             \
     vect<T,n>& operator op ## =(const T& k){                 \
         for(int i=0;i<n;i++) val[i] op ## = k;               \
