@@ -3,15 +3,17 @@
 
 
 \documentclass{article}
+\usepackage[landscape,twocolumn,nomarginpar,height=7in,width=10in,top=1in,bottom=0.5in,columnsep=0.5in]{geometry}
 \usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead[University of Wisconsin - Madison]{University of Wisconsin - Madison}
+\rhead[\thepage]{\thepage}
+\lfoot[]{}
+\cfoot[]{}
+\rfoot[]{}
 
 %%Margins
-\oddsidemargin 0.0in
-\evensidemargin 0.0in
-\textwidth 6.5in
-\voffset -0.5in
-\textheight 9in
-
 \def\cleanws#1 {#1}
 \def\stripslash#1#2\ssend{#2}
 \def\makesane[#1]{\expandafter\expandafter\expandafter\stripslash\expandafter\string\csname#1\endcsname\ssend}
@@ -31,9 +33,7 @@
 \else
 \edef\fname{\expandafter\cleanws\fname}
 \edef\fname{\makesane[\fname]}
-\VerbatimInput[numbers=left,frame=lines,label=\fname,labelposition=all,fontsize=\small]{\fname}
-\newpage
+\VerbatimInput[numbers=left,frame=lines,label=\fname,labelposition=all,fontsize=\fontsize{7pt}{8.1pt}]{\fname}
 \fi
 \repeat
-
 \end{document}
