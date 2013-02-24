@@ -1,6 +1,7 @@
 
 #include <cassert>
 #include <stdexcept>
+#include <algorithm>
 
 using namespace std;
 
@@ -11,6 +12,62 @@ template<typename T>
 T abs(T a){ return a<0 ? -a : a;}
 ull gcd(ull a, ull b){ return a==0 ? b : gcd(b%a,a); }
 ull lcm(ull a, ull b){ return (a/gcd(a,b))*b; }
+
+class rational{
+public:
+    //NOTE: try not to touch these variables.
+    bool sign;
+    ull a,b;
+    void reduce(){
+        ull g = gcd(a,b);//note, gcd(0,b)==b and b!=0
+        assert(b!=0);//if we get this, we've failed horribly
+        a/=g;
+        b/=g;
+        if(a==0) sign = false;
+    }
+    //everything past here is the public api
+    rational():sign(false),a(0),b(1){}
+    rational(ll val):sign(val<0),a(abs(val)),b(1){}
+    rational(bool _s,ull _a,ull _b):sign(_s),a(_a),b(_b){reduce();}
+    rational& operator+=(const rational& other){
+        ull d = lcm(b,other.b);
+        ull a1 = a*(d/b);
+        ull a2 = other.a*(d/other.b);
+        b=d;
+        if(sign==other.sign){
+            a=a1+a2;
+        }
+        else if(a2>a1){
+            a=a2-a1;
+            sign=!sign;
+        }
+        else{
+            a=a1-a2;//sign is unchanged
+        }
+        reduce();
+        return *this;
+    }
+    rational operator+() const{return *this;}
+    rational operator-() const{
+        return rational (a==0 ? sign : !sign,a,b);
+    }
+    rational& operator-=(const rational& other){return *this+=(-other);}
+    rational& operator*=(const rational& other){
+        ull g1 = gcd(a,other.b);
+        ull g2 = gcd(b,other.a);
+        sign = (sign==other.sign);
+        a=(a/g1)*(other.a/g2);
+        b=(b/g2)*(other.b/g1);
+        return *this;
+    }
+    rational& operator/=(const rational& other){
+        if(other.a==0) throw domain_error("divide by zero in rational");
+        return (*this)*=rational(other.sign,other.b,other.a);
+    }
+
+    ull denominator() const{return b;}
+    ull numerator() const{return a;}
+};
 
 void mult_array(ull a, ull b, ull *out){
 #define LOW_MASK (0xFFFFFFFFULL)
@@ -36,88 +93,6 @@ void mult_array(ull a, ull b, ull *out){
 #undef LOW_MASK
 }
 
-class rational{
-private:
-    bool sign;
-    ull a,b;
-    void reduce(){
-        ull g = gcd(a,b);
-        if(a!=0){
-            a/=g;
-            b/=g;
-        }
-        else{
-            assert(b!=0);//if we get this, we've failed horribly
-            a=0;
-            b=1;
-            sign = false;
-        }
-    }
-    friend bool operator==(const rational&,const rational&);
-    friend bool operator!=(const rational&,const rational&);
-    friend bool operator<(const rational&,const rational&);
-    friend bool operator<=(const rational&,const rational&);
-    friend bool operator>=(const rational&,const rational&);
-    friend bool operator>(const rational&,const rational&);
-public:
-    rational():sign(false),a(0),b(1){}
-    rational(ll val):sign(val<0),a(abs(val)),b(1){}
-    rational(int val):sign(val<0),a(abs(val)),b(1){}
-
-
-    rational& operator+=(const rational& other){
-        //this simplifies some later cases
-        if(*this==-other || (*this==0 && other==0)){
-            sign = false;
-            a=0;
-            b=1;
-            return *this;
-        }
-        ull d = lcm(b,other.b);
-        ull a1 = a*(d/b);
-        ull a2 = other.a*(d/other.b);
-        b=d;
-        if(sign==other.sign){
-            a=a1+a2;
-        }
-        else if(a2>a1){
-            a=a2-a1;
-            sign=!sign;
-        }
-        else{
-            a=a1-a2;//sign is unchanged
-        }
-        reduce();
-        return *this;
-    }
-    rational operator+() const{return *this;}
-    rational operator-() const{
-        rational ret(*this);
-        ret.sign = !ret.sign;
-        return ret;
-    }
-    rational& operator-=(const rational& other){return *this+=(-other);}
-    rational& operator*=(const rational& other){
-        ull g1 = gcd(a,other.b);
-        ull g2 = gcd(b,other.a);
-        sign = (sign==other.sign);
-        a=(a/g1)*(other.a/g2);
-        b=(b/g2)*(other.b/g1);
-        return *this;
-    }
-    rational& operator/=(const rational& other){
-        if(other==0)
-            throw domain_error("divide by zero in rational");
-        rational helper = other;
-        helper.a=other.b;
-        helper.b=other.a;
-        return (*this)*=helper;
-    }
-
-    ull denominator() const{return b;}
-    ull numerator() const{return a;}
-};
-
 bool operator==(const rational& r,const rational& s) {return r.sign==s.sign && r.a==s.a && r.b==s.b;}
 bool operator<(const rational& r, const rational& s){
     if(r==s) return false;
@@ -126,8 +101,6 @@ bool operator<(const rational& r, const rational& s){
         return -s<-r;
     }
     if(s.sign) return false;
-    if(r==0) return true;//we know that s!=0 since r!=s
-    if(s==0) return false;
     //try to do it directly
     //r.a s.b < r.b s.a
     ull left_array[4]={0,0,0,0};
