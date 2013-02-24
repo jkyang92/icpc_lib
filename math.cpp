@@ -49,27 +49,3 @@ ull binom(ull n,ull m){
     }
     return ret;
 }
-
-#define TEST_EGCD(a,b) do{pair<ull,ull> val = egcd((a),(b)); assert(gcd((a),(b))==val.first*(a)+val.second*(b));}while(0)
-
-int main(){
-    //egcd tests
-    TEST_EGCD(0,0);
-    TEST_EGCD(1,0);
-    TEST_EGCD(0,1);
-    TEST_EGCD(1,1);
-    TEST_EGCD(5,500);
-    TEST_EGCD(10,25);
-    TEST_EGCD(16,25);
-    TEST_EGCD(16,500);
-    assert(binom(1,0)==1);
-    assert(binom(100,100)==1);
-    assert(binom(0,0)==1);
-    assert(binom(2,1)==2);
-    assert(binom(300,1)==300);
-    assert(binom(4,2)==6);
-    assert(factorial(1)==1);
-    assert(factorial(0)==1);
-    assert(factorial(2)==2);
-    assert(factorial(7)==5040);
-}

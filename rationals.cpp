@@ -93,7 +93,8 @@ void mult_array(ull a, ull b, ull *out){
 #undef LOW_MASK
 }
 
-bool operator==(const rational& r,const rational& s) {return r.sign==s.sign && r.a==s.a && r.b==s.b;}
+bool operator==(const rational& r,const rational& s) {
+    return r.sign==s.sign && r.a==s.a && r.b==s.b;}
 bool operator<(const rational& r, const rational& s){
     if(r==s) return false;
     if(r.sign){

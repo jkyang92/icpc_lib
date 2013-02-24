@@ -44,7 +44,8 @@ int arate [250][2];
 long dist  [250][250];
 
 bool canUse(int h, int a, long long year){
-	return sol[h][a][0]>=0 || (sol[h][a][1]>0 && sol[h][a][1]*(year-dist[h][a])+sol[h][a][0]>=0);
+	return sol[h][a][0]>=0 ||
+        (sol[h][a][1]>0 && sol[h][a][1]*(year-dist[h][a])+sol[h][a][0]>=0);
 }
 
 void buildGraph(long long maxCost){

@@ -11,7 +11,8 @@ using namespace std;
 typedef vect<double,2> point;
 
 //note, will return false if the two circles have the same center
-bool circle_intersection(point c1, double r1, point c2, double r2,pair<point,point>& ints){
+bool circle_intersection(point c1, double r1, point c2, double r2,
+                         pair<point,point>& ints){
     if(r1<r2) return circle_intersection(c2,r2,c1,r1,ints);
     double d2 = (c1-c2).norm();
     if(d2<EPSILON || d2-(r1+r2)*(r1+r2)>EPSILON || (r1-r2)*(r1-r2)-d2>EPSILON)
@@ -27,7 +28,8 @@ bool circle_intersection(point c1, double r1, point c2, double r2,pair<point,poi
     return true;
 }
 
-bool circle_line_intersection(point c, double r, point b, vect<double,2> v,pair<point,point>& ints){
+bool circle_line_intersection(point c, double r, point b, vect<double,2> v,
+                              pair<point,point>& ints){
     vect<double,2> unit = v/(sqrt(v.norm()));
     vect<double,2> delta1 = (c-b)-proj(c-b,unit);
     if(delta1.norm()-r*r>EPSILON)
