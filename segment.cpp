@@ -93,38 +93,38 @@ char doSegmentsIntersects(Segment one, Segment two){
 	double num, denom;
 	char code = '?';
 
-	denom = 	one.start.x 	* ( two.end.y	- two.start.y ) +
-			one.end.x	* ( two.start.y - two.end.y 	) +
-			two.end.x	* ( one.end.y 	- one.start.y ) +
-			two.start.x	* ( one.start.y	- one.end.y	);
+	denom =	one.start.x * ( two.end.y   - two.start.y ) +
+		one.end.x   * ( two.start.y - two.end.y   ) +
+		two.end.x   * ( one.end.y   - one.start.y ) +
+		two.start.x * ( one.start.y - one.end.y	  );
 
 	//Parallel
 	if(abs(denom) < ep)
 		return parallelSegmentIntersection(one, two);
 
-	num = 		one.start.x	* ( two.end.y	- two.start.y ) +
-			two.start.x	* ( one.start.y	- two.end.y 	) +
-			two.end.x	* ( two.start.y	- one.start.y );
+	num = 	one.start.x * ( two.end.y   - two.start.y ) +
+		two.start.x * ( one.start.y - two.end.y   ) +
+		two.end.x   * ( two.start.y - one.start.y );
 
 	if( (abs(num) <ep) || (abs(num -denom)<ep) )
 		code = 'v';
 
 	s = num / denom;
 
-	num = 		-(one.start.x	* ( two.start.y	- one.end.y	) +
-			one.end.x	* ( one.start.y	- two.start.y	) +
-			two.start.x	* ( one.end.y	- one.start.y ));
+	num = -(one.start.x * ( two.start.y - one.end.y	  ) +
+ 		one.end.xi  * ( one.start.y - two.start.y ) +
+		two.start.x * ( one.end.y   - one.start.y ));
 
 	if( (abs(num) <ep) || (abs(num -denom)<ep) )
 		code = 'v';
 
 	t = num / denom;
 
-	if	  ( (0.0 < s) && (s < 1.0) &&
-			(0.0 < t) && (t < 1.0) )
+	if ( (0.0 < s) && (s < 1.0) &&
+             (0.0 < t) && (t < 1.0) )
 		code = '1';
 	else if ( (0.0 > s) || (s > 1.0) ||
-			(0.0 > t) || (t > 1.0) )
+		  (0.0 > t) || (t > 1.0) )
 		code = '0';
 
 	return code;
@@ -134,47 +134,28 @@ char doSegmentsIntersects(Segment one, Segment two){
 int getIntersectionPoint(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4, Point& ipt){
 	double s, num, denom;
 
-	denom = 	x1 	* ( y4	- y3 ) +
-			x2	* ( y3 	- y4 ) +
-			x4	* ( y2 	- y1 ) +
-			x3	* ( y1	- y2 );
+	denom = x1 * ( y4 - y3 ) +
+		x2 * ( y3 - y4 ) +
+		x4 * ( y2 - y1 ) +
+		x3 * ( y1 - y2 );
 	//Parallel
 	if(abs(denom) < ep)
 		return -1;
 
-	num = 		x1	* ( y4	- y3 ) +
-			x3	* ( y1	- y4 ) +
-			x4	* ( y3	- y1 );
+	num =   x1 * ( y4 - y3 ) +
+		x3 * ( y1 - y4 ) +
+		x4 * ( y3 - y1 );
 
 	s = num / denom;
 
-	num = 		-(x1	* ( y3	- y2 ) +
-			x2	* ( y1	- y3 ) +
-			x3	* ( y2	- y1 ));
+	num = -(x1 * ( y3 - y2 ) +
+		x2 * ( y1 - y3 ) +
+		x3 * ( y2 - y1 ));
 
-	ipt = Point( 	x1 + s * ( x2 - x1 ), y1 + s * ( y2 - y1 ));
+	ipt = Point( x1 + s * ( x2 - x1 ), y1 + s * ( y2 - y1 ));
 	return 0;
 }
 
 int getIntersectionPoint(Segment one, Segment two, Point& ipt){
 	return getIntersectionPoint(one.start.x,one.start.y,one.end.x,one.end.y,two.start.x,two.start.y,two.end.x,two.end.y, ipt);
-}
-
-int main()
-{
-	Point o(-1,1), t(-1,-1),th(1,-1),f(1,1);
-	Segment one(o,th);
-	Segment two(t,f);
-	Segment three(o,t);
-	Segment four (th,f);
-
-	Point z(0,0);
-	Segment a(o,z);
-	Segment b(t,z);
-
-	printf("%c\n",doSegmentsIntersects(one,two));
-	printf("%c\n",doSegmentsIntersects(three,four));
-	printf("%c\n",doSegmentsIntersects(b,a));
-	printf("%c\n",doSegmentsIntersects(one,a));
-	printf("%c\n",doSegmentsIntersects(two,a));
 }
