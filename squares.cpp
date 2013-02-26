@@ -20,7 +20,8 @@ int solve(int w){
 	int min=1<<30;
 	f(i,n-w+1)
 		f(j,n-w+1){
-			int val = ((i>0&&j>0)?sol[i-1][j-1]:0)+sol[i+w-1][j+w-1]-((i>0)?sol[i-1][j+w-1]:0)-((j>0)?sol[i+w-1][j-1]:0);
+			int val = ((i>0&&j>0)?sol[i-1][j-1]:0)+sol[i+w-1][j+w-1]
+                -((i>0)?sol[i-1][j+w-1]:0)-((j>0)?sol[i+w-1][j-1]:0);
 			min = min>val?val:min;
 		}
 	return min;

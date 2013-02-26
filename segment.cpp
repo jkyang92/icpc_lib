@@ -131,7 +131,8 @@ char doSegmentsIntersects(Segment one, Segment two){
 }
 
 //Returns 0 for Sucess, -1 for parallel
-int getIntersectionPoint(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4, Point& ipt){
+int getIntersectionPoint(double x1, double y1, double x2, double y2,
+                         double x3, double y3, double x4, double y4, Point& ipt){
 	double s, num, denom;
 
 	denom = x1 * ( y4 - y3 ) +
@@ -157,5 +158,6 @@ int getIntersectionPoint(double x1, double y1, double x2, double y2, double x3, 
 }
 
 int getIntersectionPoint(Segment one, Segment two, Point& ipt){
-	return getIntersectionPoint(one.start.x,one.start.y,one.end.x,one.end.y,two.start.x,two.start.y,two.end.x,two.end.y, ipt);
+	return getIntersectionPoint(one.start.x,one.start.y,one.end.x,one.end.y,
+                                two.start.x,two.start.y,two.end.x,two.end.y, ipt);
 }

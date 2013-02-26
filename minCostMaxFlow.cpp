@@ -3,13 +3,12 @@
 #include <limits.h>
 #include <queue>
 #include <algorithm>
-
 using namespace std;
 
 #define f(i,n) for(int i =0;i<n;i++)
 #define fi(i,t,n) for(t::iterator i=n.begin(); i!=n.end();i++)
 
-const int mn = 900;
+const int mn = 900;//MAX NODES
 typedef map<int,int> node;
 node nodes[mn];
 int prev[mn];
@@ -27,7 +26,6 @@ void addEdge(int i, int j, int cap, int c, int nnodes){
 	nodes[jIn][iOut] = 0;
 	cost[jIn][iOut] = -c;
 }
-
 //NOTE: EDGES FROM SOURCE GO STRAIGHT TO OUT NODES OF I.
 void addFromSource(int i, int cap, int nnodes){
 	int iIn = begin+i+nnodes;
@@ -101,10 +99,10 @@ int maxFlow(int& c)
 	copy(cost, cost+mn, reCost);
 	potential[source]=0;
 	f(k,mn)
-		f(i,mn)
-			fi(j,node,nodes[i])
-				if(j->second > 0)
-					potential[j->first] = min (potential[j->first], potential[i]+cost[i][j->first]);
+	    f(i,mn)
+		fi(j,node,nodes[i])
+		    if(j->second > 0)
+			potential[j->first] = min (potential[j->first], potential[i]+cost[i][j->first]);
 	while(d()<INT_MAX)flow+=update(c);
 	return flow;
 }
@@ -115,34 +113,7 @@ int ind(int i,int j){
 }
 
 int main(){
-	int tc, n;
-	scanf("%d",&tc);
-	f(i,tc){
-		for_each(nodes,nodes+mn,mem_fun_ref(&node::clear));
-		for_each(reCost,reCost+mn,mem_fun_ref(&node::clear));
-		char lines[21][21];
-		scanf("%d %d", &n, &m);
-		f(j,n){
-			scanf("%s", &lines[j]);
-		}
-		int nnodes = n*m;
-		f(j,n){
-			f(k,m)
-			{
-				if(lines[j][k]=='X')continue;
-				addBetweenNodes(ind(j,k),1,lines[j][k]-'0',nnodes);
-				if(j==0)addFromSource(ind(j,k), 1, nnodes);
-				if(j==n-1)addToSink(ind(j,k), 1,nnodes);
-				if(k>0 	 && lines[j][k-1]!='X')addEdge(ind(j,k),ind(j,k-1),1,1,nnodes);
-				if(k<m-1 && lines[j][k+1]!='X')addEdge(ind(j,k),ind(j,k+1),1,1,nnodes);
-				if(j>0 	 && lines[j-1][k]!='X')addEdge(ind(j,k),ind(j-1,k),1,3,nnodes);
-				if(j<n-1 && lines[j+1][k]!='X')addEdge(ind(j,k),ind(j+1,k),1,0,nnodes);
-			}
-		}
-		int cost;
-		int flow=maxFlow(cost);
-		printf("%d %.2f\n",flow, ((double)cost)/((double)flow));
-	}
-
+	for_each(nodes,nodes+mn,mem_fun_ref(&node::clear));//NEEDED TO CLEAR
+	for_each(reCost,reCost+mn,mem_fun_ref(&node::clear));//NEED TO CLEAR
 	return 0;
 }
