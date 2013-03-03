@@ -10,6 +10,7 @@ void bellman_ford(int ncount,vector<edge> edges,int source,int *dist, bool *reac
     for(int i=0;i<ncount;i++){
         dist[i]=-1;
         reachable[i]=false;
+        pred[i] = -1;
     }
     dist[source]=0;
     reachable[source]=true;
