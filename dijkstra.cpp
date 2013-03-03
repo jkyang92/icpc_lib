@@ -2,6 +2,7 @@
 #include <limits.h>
 #include <queue>
 #include <map>
+#include <functional>
 #include <algorithm>
 
 #define f(i,n) for(int i=0; i<n; i++)
@@ -12,8 +13,8 @@ typedef map<int,int> node;
 const int mn = 100;
 node nodes[mn];
 int dist[mn];
-int prev[mn];
-typedef pair<int,int> edge;
+int prevs[mn];
+typedef pair<int,int> edge;//Contains (distance to node, node). NOT (node, node).
 
 struct comp{
 	bool operator()(const int a, const int b){
@@ -40,7 +41,7 @@ void d(int start){
 			if(dist[i]+nodes[i][to]<dist[to]){
 				dist[to] = dist[i]+nodes[i][to];
 				q.push(edge(dist[to],to));
-				prev[to] = i;
+				prevs[to] = i;
 			}
 		}
 	}
