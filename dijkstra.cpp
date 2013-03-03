@@ -37,8 +37,8 @@ void d(int start){
 		int i = e.second;
 		for(node::iterator j = nodes[i].begin(); j !=nodes[i].end();j++){
 			int to = j->first;
-			if(dist[i]+nodes[i][to]<dist[to]){
-				dist[to] = dist[i]+nodes[i][to];
+			if(dist[i]+j->second<dist[to]){
+				dist[to] = dist[i]+j->second;
 				q.push(edge(dist[to],to));
 				prev[to] = i;
 			}
