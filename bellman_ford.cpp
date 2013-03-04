@@ -15,7 +15,7 @@ void bellman_ford(int ncount,const vector<edge>& edges,int source,int *dist, boo
     dist[source]=0;
     reachable[source]=true;
     pred[source]=source;
-    for(int i=0;i<ncount-1;i++){
+    for(int i=0;i<2*ncount;i++){
         for(int j=0;j<edges.size();j++){
             if(reachable[edges[j].a]){
                 int ncost = edges[j].cost+dist[edges[j].a];
