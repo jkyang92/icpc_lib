@@ -17,8 +17,8 @@ struct Point{
     Point(){x=0;y=0;vals=false, dist=0, cos=0;}
 
     Point(double x, double y){
-    	this->x = x; this->y = y;
-    	vals=false, dist=0, cos=0;
+        this->x = x; this->y = y;
+        vals=false, dist=0, cos=0;
     }
 
     void setVals () const;
@@ -29,7 +29,7 @@ Point minPoint;
 void Point::setVals () const{
     vals = true;
     dist =  (x-minPoint.x)*(x-minPoint.x)+(y-minPoint.y)*(y-minPoint.y);
-    cos = 	(x-minPoint.x)/sqrt(dist);
+    cos =     (x-minPoint.x)/sqrt(dist);
 }
 
 
@@ -41,14 +41,14 @@ int crossProduct(Point& start1, Point& start2, Point& end1, Point& end2){
 
 bool compareTo(const Point& a, const Point& b) {
     if(!a.vals)
-    	a.setVals();
+        a.setVals();
     if(!b.vals)
-    	b.setVals();
+        b.setVals();
 
     if(abs(a.cos - b.cos) > 1e-14)
-    	return (a.cos - b.cos)>0;
+        return (a.cos - b.cos)>0;
     else
-    	return (b.dist - a.dist)>0;
+        return (b.dist - a.dist)>0;
 };
 
 void grahamScan(Point* points, int length, Point minPoint);
@@ -56,9 +56,9 @@ void grahamScan(Point* points, int length, Point minPoint);
 void grahamScan(Point* points, int length){
     for(int i=0; i < length;i++)
     {
-    	Point p = points[i];
-    	if(i==0 || p.y<minPoint.y || (p.y==minPoint.y && p.x <minPoint.x))
-    		minPoint = p;
+        Point p = points[i];
+        if(i==0 || p.y<minPoint.y || (p.y==minPoint.y && p.x <minPoint.x))
+            minPoint = p;
 
     }
 
@@ -74,13 +74,13 @@ void grahamScan(Point* points, int length, Point minPoint) {
 
     int m = 1;
     for(int i = 2; i < length; i++){
-    	while(i<length && crossProduct(points[m-1],points[m-1],points[m],points[i])<=0)
-    		if(m==1)	//Check if first points are collinear, if so ignore unnecessary points.
-    			points[m]=points[i++];
-    		else
-    			m--;
-    	if(i!=length)
-    		points[++m]=points[i];
+        while(i<length && crossProduct(points[m-1],points[m-1],points[m],points[i])<=0)
+            if(m==1)    //Check if first points are collinear, if so ignore unnecessary points.
+                points[m]=points[i++];
+            else
+                m--;
+        if(i!=length)
+            points[++m]=points[i];
     }
 }
 
@@ -100,7 +100,7 @@ int main()
     grahamScan(points, 3);
     for(int i =0; points[i].x!=stopPoint->x || points[i].y!=stopPoint->y ; i++)
     {
-    	printf("%lf %lf\n",points[i].x,points[i].y);
+        printf("%lf %lf\n",points[i].x,points[i].y);
     }
 
     printf("%lf %lf\n",stopPoint->x,stopPoint->y);

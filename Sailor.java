@@ -4,7 +4,7 @@ public class Sailor {
     /*
      * This useful for computing area of a figure with straight lines
      * Requirements:
-     *     	The lines in an order
+     *         The lines in an order
      *
      * Algorithm:
      *

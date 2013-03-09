@@ -54,11 +54,11 @@ void addBetweenNodes(int i, int cap, int c, int nnodes){
 
 void reduce(){
     f(i,mn)
-    	fi(j,node,nodes[i]){
-    		edge e = *j;
-    		if(e.first!=0)
-    			reCost[i][e.first] += potential[i] - potential[e.first];
-    	}
+        fi(j,node,nodes[i]){
+            edge e = *j;
+            if(e.first!=0)
+                reCost[i][e.first] += potential[i] - potential[e.first];
+        }
 }
 
 int d(){
@@ -69,16 +69,16 @@ int d(){
     potential[source] = 0;
     q.push(edge(0,source));
     while(!q.empty()){
-    	edge c = q.top();q.pop(); int cur = c.second, cost = c.first;
-    	if(potential[cur] < cost)continue;
-    	fi(i,node,nodes[cur]){
-    		edge e = *i;
-    		if(nodes[cur][e.first]<=0)continue;
-    		if(potential[e.first] - reCost[cur][e.first] <= potential[cur])continue;
-    		potential[e.first] = potential[cur]+reCost[cur][e.first];
-    		q.push(edge(potential[e.first],e.first));
-    		prev[e.first] = cur;
-    	}
+        edge c = q.top();q.pop(); int cur = c.second, cost = c.first;
+        if(potential[cur] < cost)continue;
+        fi(i,node,nodes[cur]){
+            edge e = *i;
+            if(nodes[cur][e.first]<=0)continue;
+            if(potential[e.first] - reCost[cur][e.first] <= potential[cur])continue;
+            potential[e.first] = potential[cur]+reCost[cur][e.first];
+            q.push(edge(potential[e.first],e.first));
+            prev[e.first] = cur;
+        }
     }
     return potential[sink];
 }
@@ -89,7 +89,7 @@ int update(int &cst){
                 ret = min(ret, nodes[p][c]);
         for (int c = sink, p = prev[c]; c != source; c = p, p = prev[c])
                 cst += cost[p][c] * ret, nodes[p][c] -= ret, nodes[c][p] += ret;
-    	return ret;	
+        return ret;    
 }
 
 int maxFlow(int& c)
@@ -100,9 +100,9 @@ int maxFlow(int& c)
     potential[source]=0;
     f(k,mn)
         f(i,mn)
-    	fi(j,node,nodes[i])
-    	    if(j->second > 0)
-    		potential[j->first] = min (potential[j->first], potential[i]+cost[i][j->first]);
+        fi(j,node,nodes[i])
+            if(j->second > 0)
+            potential[j->first] = min (potential[j->first], potential[i]+cost[i][j->first]);
     while(d()<INT_MAX)flow+=update(c);
     return flow;
 }

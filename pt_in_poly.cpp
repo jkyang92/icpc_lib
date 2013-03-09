@@ -68,24 +68,24 @@ register double a,b,c;
     for ( j = numverts+1 ; --j ; ) {
         x1X = vtx1[X] - tx;
         if ( x0X * x1X <= 0 ) {       /* reject if (?+-) or (?-+) */
-    	   a = vtx1[Y] - ty;
-    	   b = vtx0[Y] - ty;
-    	   c = ( x0X * a ) - ( x1X * b );
-    	   if ( x1X * c <= 0 ) {      /* reject if (+-?) or (-+?) */
+           a = vtx1[Y] - ty;
+           b = vtx0[Y] - ty;
+           c = ( x0X * a ) - ( x1X * b );
+           if ( x1X * c <= 0 ) {      /* reject if (+-?) or (-+?) */
               if (x0X * c >= 0) {     /* reject if (+?-) or (-?+) */
-    			if ( c > 0 && x0X > 0 && x1X < 0 )       /* (+++) */
-    				count += 2;
-    			else if ( c < 0 && x0X < 0 && x1X > 0 )  /* (---) */
-    				count -= 2;
-    			else if ( c > 0 )  /* (++0) or (+0+), (+00) not possible */
-    				count++;
-    			else if ( c < 0 )  /* (--0) or (-0-), (-00) not possible */
-    				count--;
-    			else if ( x0X != 0 || x1X != 0 )      /* (0??) */
-    				return 1;
-    			else if ( a * b <= 0 ) return (1);    /* (000) */
-    		 }	
-    	  }
+                if ( c > 0 && x0X > 0 && x1X < 0 )       /* (+++) */
+                    count += 2;
+                else if ( c < 0 && x0X < 0 && x1X > 0 )  /* (---) */
+                    count -= 2;
+                else if ( c > 0 )  /* (++0) or (+0+), (+00) not possible */
+                    count++;
+                else if ( c < 0 )  /* (--0) or (-0-), (-00) not possible */
+                    count--;
+                else if ( x0X != 0 || x1X != 0 )      /* (0??) */
+                    return 1;
+                else if ( a * b <= 0 ) return (1);    /* (000) */
+             }    
+          }
        }
        x0X = x1X;
        vtx0 = vtx1;
@@ -135,34 +135,34 @@ register double a, b;
     for ( j = numverts+1 ; --j ; ) {
         x1X = vtx1[X] - tx;
         if ( x0X*x1X <= 0 ) {                   /* reject triangles with beta<0 or gamma<0 */
-    	   x0Yt = vtx0[Y] - ty;
-    	   x1Yt = vtx1[Y] - ty;
-    	   if (( x0Yt >= 0) || ( x1Yt >= 0 )) { /* reject triangles under x-axis */
-    	      if ( x0X > x1X ) {
-    				a = x0X*x1Yt ; b = x1X*x0Yt ;
-    				if ( a > b ) {
-    					if ( x0X == 0 || x1X == 0 ) {     /* on edge OVi or OVj */
-    						count++;
-    					} else {                          /* inside triangle OViVj */
-    						count += 2;
-    					}
-    				} else if ( a == b ) {                /* on edge ViVj or vertices Vi or Vj */
-    					return (1);
-    				}
-    		  } else if ( x0X < x1X ) {
-    				a = x0X*x1Yt ; b = x1X*x0Yt ;
-    				if ( a < b ) {
-    					if ( x0X == 0 || x1X == 0 ) {     /* on edge OVi or OVj */
-    						count--;
-    					} else {                          /* inside triangle OViVj */
-    						count -= 2;
-    					}
-    				} else if ( a == b ) {                /* on edge ViVj or vertices Vi or Vj */
-    					return (1);
-    				}
-    		  } else {
-    			     if (( x0Yt <= 0 ) || ( x1Yt <= 0 )) {   /* on vertical edge ViVj */
-    				    return (1);
+           x0Yt = vtx0[Y] - ty;
+           x1Yt = vtx1[Y] - ty;
+           if (( x0Yt >= 0) || ( x1Yt >= 0 )) { /* reject triangles under x-axis */
+              if ( x0X > x1X ) {
+                    a = x0X*x1Yt ; b = x1X*x0Yt ;
+                    if ( a > b ) {
+                        if ( x0X == 0 || x1X == 0 ) {     /* on edge OVi or OVj */
+                            count++;
+                        } else {                          /* inside triangle OViVj */
+                            count += 2;
+                        }
+                    } else if ( a == b ) {                /* on edge ViVj or vertices Vi or Vj */
+                        return (1);
+                    }
+              } else if ( x0X < x1X ) {
+                    a = x0X*x1Yt ; b = x1X*x0Yt ;
+                    if ( a < b ) {
+                        if ( x0X == 0 || x1X == 0 ) {     /* on edge OVi or OVj */
+                            count--;
+                        } else {                          /* inside triangle OViVj */
+                            count -= 2;
+                        }
+                    } else if ( a == b ) {                /* on edge ViVj or vertices Vi or Vj */
+                        return (1);
+                    }
+              } else {
+                     if (( x0Yt <= 0 ) || ( x1Yt <= 0 )) {   /* on vertical edge ViVj */
+                        return (1);
                      }
               }
            }

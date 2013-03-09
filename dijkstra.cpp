@@ -18,7 +18,7 @@ typedef pair<int,int> edge;//Contains (distance to node, node). NOT (node, node)
 
 struct comp{
     bool operator()(const int a, const int b){
-    	return dist[a]>dist[b];
+        return dist[a]>dist[b];
     }
 };
 
@@ -33,17 +33,17 @@ void d(int start){
     dist[start]=0;
     q.push(edge(0,start));
     while(!q.empty()){
-    	edge e = q.top();q.pop();
-    	if(dist[e.second]<e.first)continue;
-    	int i = e.second;
-    	for(node::iterator j = nodes[i].begin(); j !=nodes[i].end();j++){
-    		int to = j->first;
-    		if(dist[i]+j->second<dist[to]){
-    			dist[to] = dist[i]+j->second;
-    			q.push(edge(dist[to],to));
-    			prevs[to] = i;
-    		}
-    	}
+        edge e = q.top();q.pop();
+        if(dist[e.second]<e.first)continue;
+        int i = e.second;
+        for(node::iterator j = nodes[i].begin(); j !=nodes[i].end();j++){
+            int to = j->first;
+            if(dist[i]+j->second<dist[to]){
+                dist[to] = dist[i]+j->second;
+                q.push(edge(dist[to],to));
+                prevs[to] = i;
+            }
+        }
     }
 }
 
