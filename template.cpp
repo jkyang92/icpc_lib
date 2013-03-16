@@ -22,3 +22,6 @@
 #include <cstring>
 
 using namespace std;
+
+#define f(i,n) for(int i=0; i <n;i++)
+#define fi(i,s,n) for(int i=s; i<n;i++)
