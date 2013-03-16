@@ -13,9 +13,10 @@ using namespace std;
  *DO NOT use with int, use with either doubles or rationals, rationals suggested
  *the resulting matrix will always be in row-reduced echelon form
  *returns the non-pivot columns
+ *the argument k tells the algorithm how many augmented columns there are
  */
 template<typename T>
-vector<int> gaussian_elimination(T** A,int n, int m,T *pdet){
+vector<int> gaussian_elimination(T** A,int n, int m, int k,T *pdet){
     vector<int> ret;
     int p_row=0;
     int det=1;
@@ -41,16 +42,14 @@ vector<int> gaussian_elimination(T** A,int n, int m,T *pdet){
         }
         p_value = A[p_row][c];
         for(int r=0;r<n;r++){
-            if(r==c) continue;
+            if(r==p_row) continue;
             T mult = A[r][c]/p_value;
-            if(mult!=0)
-                for(int i=c+1;i<m;i++)
-                    A[r][i]-=A[r][i]*mult;
+            for(int i=c+1;i<m+k;i++)
+                A[r][i]-=A[p_row][i]*mult;
             A[r][c]=0;
         }
-        //set pivot to 1
         A[p_row][c]=1;
-        for(int i=p_row+1;i<m;i++) A[p_row][i]/=p_value;
+        for(int i=c+1;i<m+k;i++) A[p_row][i]/=p_value;
         det*=p_value;
         p_row++;
     }
