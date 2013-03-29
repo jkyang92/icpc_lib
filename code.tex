@@ -10,6 +10,7 @@
 \usepackage{listings}
 \usepackage{caption}
 \usepackage{color}
+\usepackage{pdfpages}
 \pagestyle{fancy}
 \lhead[University of Wisconsin - Madison]{University of Wisconsin - Madison}
 \rhead[\thepage]{\thepage}
@@ -54,4 +55,8 @@ frame=lines,
 \lstinputlisting[caption={[\noexpand\noexpand\noexpand\detokenize{\fname}]},title={\fname},name=\fname]{\fname}
 \fi
 \repeat
+
+\onecolumn
+{\center \includegraphics[angle=270,scale=.82]{geom_cheatsheet.pdf}}
+
 \end{document}
