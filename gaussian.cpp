@@ -30,14 +30,18 @@ vector<int> gaussian_elimination(T** A,int n, int m, int k,T *pdet){
                 pivot = r;
             }
         }
+#ifdef EPSILON
+        if(abs(p_value)<EPSILON){
+#else
         if(p_value==0){
+#endif
             ret.push_back(c);
             if(p_row!=n)
                 det = 0;
             continue;
         }
         if(p_row!=pivot){
-            swap_ranges(A[p_row],A[p_row]+n,A[pivot]);
+            swap_ranges(A[p_row],A[p_row]+m+k,A[pivot]);
             det*=((p_row-pivot)%2==0 ? 1 : -1);
         }
         p_value = A[p_row][c];
