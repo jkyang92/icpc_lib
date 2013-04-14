@@ -17,8 +17,8 @@
    covering results on (0,-1) and the test point on (0,0)
 */
 
-#define X	0
-#define Y	1
+#define X    0
+#define Y    1
 
 /* ======= baryc_tri_based inclusion test =================================== */
 
@@ -52,7 +52,7 @@
 
 int baryc_tri_based ( double pgon[][2], int numverts, double point[2] )
 {
-register double	ty, tx, *vtx1, x0X, x1X;
+register double    ty, tx, *vtx1, x0X, x1X;
 register double *vtx0;
 register int j, count;
 register double a,b,c;
@@ -66,30 +66,30 @@ register double a,b,c;
 
     count = 0;
     for ( j = numverts+1 ; --j ; ) {
-	    x1X = vtx1[X] - tx;
-	    if ( x0X * x1X <= 0 ) {       /* reject if (?+-) or (?-+) */
-		   a = vtx1[Y] - ty;
-		   b = vtx0[Y] - ty;
-		   c = ( x0X * a ) - ( x1X * b );
-		   if ( x1X * c <= 0 ) {      /* reject if (+-?) or (-+?) */
+        x1X = vtx1[X] - tx;
+        if ( x0X * x1X <= 0 ) {       /* reject if (?+-) or (?-+) */
+           a = vtx1[Y] - ty;
+           b = vtx0[Y] - ty;
+           c = ( x0X * a ) - ( x1X * b );
+           if ( x1X * c <= 0 ) {      /* reject if (+-?) or (-+?) */
               if (x0X * c >= 0) {     /* reject if (+?-) or (-?+) */
-				if ( c > 0 && x0X > 0 && x1X < 0 )       /* (+++) */
-					count += 2;
-				else if ( c < 0 && x0X < 0 && x1X > 0 )  /* (---) */
-					count -= 2;
-				else if ( c > 0 )  /* (++0) or (+0+), (+00) not possible */
-					count++;
-				else if ( c < 0 )  /* (--0) or (-0-), (-00) not possible */
-					count--;
-				else if ( x0X != 0 || x1X != 0 )      /* (0??) */
-					return 1;
-				else if ( a * b <= 0 ) return (1);    /* (000) */
-			 }	
-		  }
-	   }
-	   x0X = x1X;
-	   vtx0 = vtx1;
-	   vtx1 += 2;
+                if ( c > 0 && x0X > 0 && x1X < 0 )       /* (+++) */
+                    count += 2;
+                else if ( c < 0 && x0X < 0 && x1X > 0 )  /* (---) */
+                    count -= 2;
+                else if ( c > 0 )  /* (++0) or (+0+), (+00) not possible */
+                    count++;
+                else if ( c < 0 )  /* (--0) or (-0-), (-00) not possible */
+                    count--;
+                else if ( x0X != 0 || x1X != 0 )      /* (0??) */
+                    return 1;
+                else if ( a * b <= 0 ) return (1);    /* (000) */
+             }    
+          }
+       }
+       x0X = x1X;
+       vtx0 = vtx1;
+       vtx1 += 2;
      }
      return (count==2);
 }
@@ -119,7 +119,7 @@ register double a,b,c;
 
 int baryc_and_euclidean ( double pgon[][2], int numverts, double point[2] )
 {
-register double	ty, tx, *vtx1, x0X, x1X;
+register double    ty, tx, *vtx1, x0X, x1X;
 register double *vtx0, x0Yt, x1Yt;
 register int j, count;
 register double a, b;
@@ -133,42 +133,42 @@ register double a, b;
 
     count = 0;
     for ( j = numverts+1 ; --j ; ) {
-	    x1X = vtx1[X] - tx;
-	    if ( x0X*x1X <= 0 ) {                   /* reject triangles with beta<0 or gamma<0 */
-		   x0Yt = vtx0[Y] - ty;
-		   x1Yt = vtx1[Y] - ty;
-		   if (( x0Yt >= 0) || ( x1Yt >= 0 )) { /* reject triangles under x-axis */
-		      if ( x0X > x1X ) {
-					a = x0X*x1Yt ; b = x1X*x0Yt ;
-					if ( a > b ) {
-						if ( x0X == 0 || x1X == 0 ) {     /* on edge OVi or OVj */
-							count++;
-						} else {                          /* inside triangle OViVj */
-							count += 2;
-						}
-					} else if ( a == b ) {                /* on edge ViVj or vertices Vi or Vj */
-						return (1);
-					}
-			  } else if ( x0X < x1X ) {
-					a = x0X*x1Yt ; b = x1X*x0Yt ;
-					if ( a < b ) {
-						if ( x0X == 0 || x1X == 0 ) {     /* on edge OVi or OVj */
-							count--;
-						} else {                          /* inside triangle OViVj */
-							count -= 2;
-						}
-					} else if ( a == b ) {                /* on edge ViVj or vertices Vi or Vj */
-						return (1);
-					}
-			  } else {
-				     if (( x0Yt <= 0 ) || ( x1Yt <= 0 )) {   /* on vertical edge ViVj */
-					    return (1);
+        x1X = vtx1[X] - tx;
+        if ( x0X*x1X <= 0 ) {                   /* reject triangles with beta<0 or gamma<0 */
+           x0Yt = vtx0[Y] - ty;
+           x1Yt = vtx1[Y] - ty;
+           if (( x0Yt >= 0) || ( x1Yt >= 0 )) { /* reject triangles under x-axis */
+              if ( x0X > x1X ) {
+                    a = x0X*x1Yt ; b = x1X*x0Yt ;
+                    if ( a > b ) {
+                        if ( x0X == 0 || x1X == 0 ) {     /* on edge OVi or OVj */
+                            count++;
+                        } else {                          /* inside triangle OViVj */
+                            count += 2;
+                        }
+                    } else if ( a == b ) {                /* on edge ViVj or vertices Vi or Vj */
+                        return (1);
+                    }
+              } else if ( x0X < x1X ) {
+                    a = x0X*x1Yt ; b = x1X*x0Yt ;
+                    if ( a < b ) {
+                        if ( x0X == 0 || x1X == 0 ) {     /* on edge OVi or OVj */
+                            count--;
+                        } else {                          /* inside triangle OViVj */
+                            count -= 2;
+                        }
+                    } else if ( a == b ) {                /* on edge ViVj or vertices Vi or Vj */
+                        return (1);
+                    }
+              } else {
+                     if (( x0Yt <= 0 ) || ( x1Yt <= 0 )) {   /* on vertical edge ViVj */
+                        return (1);
                      }
               }
            }
-	    }
-	    x0X = x1X;
-	    vtx0 = vtx1;
+        }
+        x0X = x1X;
+        vtx0 = vtx1;
         vtx1 += 2;
     }
     return (count==2);
