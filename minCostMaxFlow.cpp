@@ -15,7 +15,7 @@ using namespace std;
 #define addE(i,j,cap,cos) do{\
 	nodes[i][j]=cap; nodes[j][i]=0;\
 	cost[i][j]=cos;  cost[j][i]=-(cos);\
-	}while(false)
+}while(false)
 #define loopP() for(int c=sink, p=prevs[c]; c!=source; c=p, p=prevs[c])
 #define clearN(i) for_each(i,i+mn,mem_fun_ref(&node::clear))
 
@@ -30,8 +30,8 @@ node reCost[mn],cost[mn];//reducedCost, cost.
 void reduce(){
 	f(i,nnodes)
 		fi(k,node,nodes[i]){
-			int j = (*k).first;
-			if((*k).second>0){
+			int j = k->first;
+			if(k->second>0){
 				reCost[i][j] += pot[i] - pot[j];
 				reCost[j][i]=0;
 			}
@@ -45,11 +45,13 @@ int d(){
 	pot[source] = 0;
 	q.push(edg(0,source));
 	while(!q.empty()){
-		edg c = q.top();q.pop(); int cur = c.second, cost = c.first;
+		edg c = q.top();q.pop();
+		int cur = c.second, cost = c.first;
+		if(cur==sink)return pot[sink];
 		if(pot[cur] < cost)continue;
-		fi(i,node,nodes[cur]){
-			int to = (*i).first;
-			if((*i).second<=0)continue;
+		fi(i,node,nodes[cur]){//iterate for begin to end
+			int to = i->first;
+			if(i->second<=0)continue;
 			if(pot[to] <= reCost[cur][to] + pot[cur])continue;
 			pot[to] = pot[cur]+reCost[cur][to];
 			q.push(edg(pot[to],to));
@@ -57,13 +59,13 @@ int d(){
 		}
 	}
 	reduce();
-	return pot[sink];
+	return -1;
 }
 
 int update(int &cst){
 	int ret = INT_MAX;
-        loopP() {ret = min(ret, nodes[p][c]);}
-        loopP() nodes[p][c] -= ret, nodes[c][p] += ret, cst += cost[p][c] * ret;//cst+= NOT NEEDED FOR MF
+	loopP() {ret = min(ret, nodes[p][c]);}
+	loopP() {nodes[p][c] -= ret; nodes[c][p] += ret; cst += cost[p][c] * ret;}//cst+= NOT NEEDED FOR MF
 	return ret;
 }
 
@@ -73,15 +75,17 @@ int maxFlow(int& c){
 	copy(cost, cost+nnodes, reCost);
 	pot[source]=0;
 	f(k,nnodes)
-	    f(i,nnodes)
-		fi(j,node,nodes[i]){
-			int to = j->first;
-			if(j->second>0)//make sure the edge is not a backwards residual edge in the graph.
-				pot[to] = min (pot[to], pot[i]+cost[i][to]);
+		f(i,nnodes){
+			fi(j,node,nodes[i]){
+				int to = j->first;
+				if(j->second>0)//make sure the edge is not a backwards residual edge in the graph.
+					pot[to] = min (pot[to], pot[i]+cost[i][to]);
+			}
 		}
 	reduce();//END NOT NEEDED FOR MF//
 	int flow=0;
-	while(d()<INT_MAX)flow+=update(c);
+	int loop = 0;
+	while(d()>=0 && loop<1000){loop++;flow+=update(c);}
 	return flow;
 }
 
@@ -113,20 +117,20 @@ int main(){//addE(i,j,cap,cost)
 	}
 
 	/*
-	nnodes = 5;
+	   nnodes = 5;
 
-	addE(source,indx(0),5,0);
-	addE(indx(0),indx(1),7,1);
-	addE(indx(0),indx(2),7,5);
-	addE(indx(1),indx(2),2,-2);
-	addE(indx(1),indx(3),3,8);
-	addE(indx(2),indx(3),3,-3);
-	addE(indx(3),sink,3,0);
-	addE(indx(2),indx(4),2,4);
-	addE(indx(4),sink,2,0);
+	   addE(source,indx(0),5,0);
+	   addE(indx(0),indx(1),7,1);
+	   addE(indx(0),indx(2),7,5);
+	   addE(indx(1),indx(2),2,-2);
+	   addE(indx(1),indx(3),3,8);
+	   addE(indx(2),indx(3),3,-3);
+	   addE(indx(3),sink,3,0);
+	   addE(indx(2),indx(4),2,4);
+	   addE(indx(4),sink,2,0);
 
-	int cost,mf;
-	mf=maxFlow(cost);
-	printf("cost:%d %d\n",cost,mf);
-*/	return 0;
+	   int cost,mf;
+	   mf=maxFlow(cost);
+	   printf("cost:%d %d\n",cost,mf);
+	   */	return 0;
 }
