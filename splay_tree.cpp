@@ -169,18 +169,3 @@ struct tree_set{
             root = r;
     }
 };
-
-
-int main(){
-    tree_set<int> test;
-    for(int i=0;i<10000000;i++){
-        assert(test.insert(i)->value == i);
-    }
-    for(int i=0;i<10000000;i++){
-        assert(test.find(i)->value == i);
-    }
-    for(int i=0;i<10000000;i++){
-        test.erase(test.find(i));
-    }
-
-}
