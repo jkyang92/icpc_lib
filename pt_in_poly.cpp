@@ -50,12 +50,12 @@
    like in Table 1 (? means indifference)
 */
 
-int baryc_tri_based ( double pgon[][2], int numverts, double point[2] )
+bool baryc_tri_based ( double pgon[][2], int numverts, double point[2] )
 {
-register double    ty, tx, *vtx1, x0X, x1X;
-register double *vtx0;
-register int j, count;
-register double a,b,c;
+    double    ty, tx, *vtx1, x0X, x1X;
+    double *vtx0;
+    int j, count;
+    double a,b,c;
 
     tx = point[X] ;
     ty = point[Y] ;
@@ -83,8 +83,8 @@ register double a,b,c;
                     count--;
                 else if ( x0X != 0 || x1X != 0 )      /* (0??) */
                     return 1;
-                else if ( a * b <= 0 ) return (1);    /* (000) */
-             }    
+                else if ( a * b <= 0 ) return true;    /* (000) */
+             }
           }
        }
        x0X = x1X;
@@ -117,12 +117,12 @@ register double a,b,c;
    fine in the first early rejection test approach.
 */
 
-int baryc_and_euclidean ( double pgon[][2], int numverts, double point[2] )
+bool baryc_and_euclidean ( double pgon[][2], int numverts, double point[2] )
 {
-register double    ty, tx, *vtx1, x0X, x1X;
-register double *vtx0, x0Yt, x1Yt;
-register int j, count;
-register double a, b;
+    double    ty, tx, *vtx1, x0X, x1X;
+    double *vtx0, x0Yt, x1Yt;
+    int j, count;
+    double a, b;
 
     tx = point[X] ;
     ty = point[Y] ;
@@ -147,7 +147,7 @@ register double a, b;
                             count += 2;
                         }
                     } else if ( a == b ) {                /* on edge ViVj or vertices Vi or Vj */
-                        return (1);
+                        return true;
                     }
               } else if ( x0X < x1X ) {
                     a = x0X*x1Yt ; b = x1X*x0Yt ;
@@ -158,11 +158,11 @@ register double a, b;
                             count -= 2;
                         }
                     } else if ( a == b ) {                /* on edge ViVj or vertices Vi or Vj */
-                        return (1);
+                        return true;
                     }
               } else {
                      if (( x0Yt <= 0 ) || ( x1Yt <= 0 )) {   /* on vertical edge ViVj */
-                        return (1);
+                        return true;
                      }
               }
            }
