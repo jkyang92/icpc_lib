@@ -39,9 +39,9 @@ ull binom(ull n,ull m){
     if(2*m>n) return binom(n,n-m);
     ull upper=(n-m)+1,lower=2,ret=1,denom=1;
     while(lower<=m || upper<=n){
-        if((denom>ret || lower>n) && upper<=m)
+        if((denom>ret || lower>m) && upper<=n)
             ret*=upper++;
-        else if(lower<=n)
+        else if(lower<=m)
             denom*=lower++;
         ull g = gcd(ret,denom);
         ret/=g;
