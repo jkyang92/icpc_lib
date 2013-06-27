@@ -44,7 +44,6 @@ bool compareTo(const Point& a, const Point& b) {
         a.setVals();
     if(!b.vals)
         b.setVals();
-
     if(abs(a.cos - b.cos) > 1e-14)
         return (a.cos - b.cos)>0;
     else
@@ -54,28 +53,25 @@ bool compareTo(const Point& a, const Point& b) {
 void grahamScan(Point* points, int length, Point minPoint);
 //Find the bottom left point and run grahamScan
 void grahamScan(Point* points, int length){
-    for(int i=0; i < length;i++)
-    {
+    for(int i=0; i < length;i++){
         Point p = points[i];
         if(i==0 || p.y<minPoint.y || (p.y==minPoint.y && p.x <minPoint.x))
             minPoint = p;
-
     }
-
     grahamScan(points, length, minPoint);
 }
 
 //minPoint = bottom, left point
 void grahamScan(Point* points, int length, Point minPoint) {
     Point * end = points+length;
-
     sort(points, end, compareTo);
     stopPoint = &points[length-1];
-
     int m = 1;
     for(int i = 2; i < length; i++){
-        while(i<length && crossProduct(points[m-1],points[m-1],points[m],points[i])<=0)
-            if(m==1)    //Check if first points are collinear, if so ignore unnecessary points.
+        //Check if first points are collinear, if so ignore unnecessary points.
+        while(i<length &&
+              crossProduct(points[m-1],points[m-1],points[m],points[i])<=0)
+            if(m==1)
                 points[m]=points[i++];
             else
                 m--;
@@ -84,8 +80,7 @@ void grahamScan(Point* points, int length, Point minPoint) {
     }
 }
 
-int main()
-{
+int main() {
     Point points[3];
     points[0] = Point(-10000,0);
     points[1] = Point(-234,-234);
@@ -96,12 +91,9 @@ int main()
     //points[6] = Point(-1,-1);
     //points[7] = Point(-1,0);
     //points[8] = Point(-1,1);
-
     grahamScan(points, 3);
-    for(int i =0; points[i].x!=stopPoint->x || points[i].y!=stopPoint->y ; i++)
-    {
+    for(int i =0; points[i].x!=stopPoint->x||points[i].y!=stopPoint->y;i++) {
         printf("%lf %lf\n",points[i].x,points[i].y);
     }
-
     printf("%lf %lf\n",stopPoint->x,stopPoint->y);
 }

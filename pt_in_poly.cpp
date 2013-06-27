@@ -7,7 +7,7 @@ bool baryc_tri_based ( double pgon[][2], int numverts, double point[2] )
     double *vtx0 = pgon[numverts-1];
     double *vtx1 = pgon[0] ;
     int count = 0;
-    for (int i = 0;i<numverst;i++) {
+    for (int i = 0;i<numverts;i++) {
         double x0X = vtx0[X] - point[X];
         double x1X = vtx1[X] - point[X];
         //check that point[X] is between vtx0[X] and vtx1[X]

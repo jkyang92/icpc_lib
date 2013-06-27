@@ -26,8 +26,7 @@ public:
         if(a==0) sign = false;
     }
     //everything past here is the public api
-    rational():sign(false),a(0),b(1){}
-    rational(ll val):sign(val<0),a(abs(val)),b(1){}
+    rational(ll val = 0):sign(val<0),a(abs(val)),b(1){}
     rational(bool _s,ull _a,ull _b):sign(_s),a(_a),b(_b){reduce();}
     rational& operator+=(const rational& other){
         ull d = lcm(b,other.b);

@@ -5,7 +5,8 @@
 
 //it's assumed that everything is a basis
 template<typename T,int n>
-vector<vect<T,n> > intersect_subspaces(vector<vect<T,n> >A, vector<vect<T,n> > B){
+vector<vect<T,n> > intersect_subspaces(vector<vect<T,n> >A,
+                                       vector<vect<T,n> > B){
     //calculate both perp spaces, then the A\cap B is the perp space of the
     //sum of the perp spaces
     vector<vect<T,n> > perpA,perpB;

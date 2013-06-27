@@ -32,7 +32,8 @@ public:
     }
     //note, this is the length squared norm
     T norm() const{ return (*this)*(*this); }
-    bool operator==(const vect<T,n>& other) const{ return equal(val,val+n,other.val); }
+    bool operator==(const vect<T,n>& other) const{
+        return equal(val,val+n,other.val); }
     bool operator!=(const vect<T,n>& other) const{ return !(this==other); }
     //dot product
     T operator*(const vect<T,n>& other) const{

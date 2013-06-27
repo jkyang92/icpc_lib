@@ -6,7 +6,8 @@ struct edge{
     int a,b,cost;
 };
 
-void bellman_ford(int ncount,const vector<edge>& edges,int source,int *dist, bool *reachable, int *pred){
+void bellman_ford(int ncount,const vector<edge>& edges,int source,
+                  int *dist, bool *reachable, int *pred){
     for(int i=0;i<ncount;i++){
         dist[i]=-1;
         reachable[i]=false;

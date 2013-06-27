@@ -14,29 +14,25 @@ int main(){
     while(true){
         one = new char[25];
         two = new char[25];
-
         scanf("%s",one);
         if(one[0]=='#')
             break;
         scanf("%s",two);
-
         n = strlen(one);
         m = strlen(two);
-
-
         for(int i = m; i>=0; i--){
             sol[n][i]=m-i;
         }
         for(int i = n-1; i>=0; i--){
             sol[i][m]=n-i;
         }
-
         for(int o = n-1; o>=0; o--){
             for(int t = m-1; t>=0; t--){
                 sol[o][t] = one[o]==two[t]?sol[o+1][t+1]:sol[o+1][t+1]+1;
                 sol[o][t] = sol[o][t]< sol[o][t+1]+1? sol[o][t] : sol[o][t+1]+1;
                 sol[o][t] = sol[o][t]< sol[o+1][t]+1? sol[o][t] : sol[o+1][t]+1;
-                next[o][t]= sol[o][t]==sol[o][t+1]+1?1:(sol[o][t]==sol[o+1][t]+1?2:0);
+                next[o][t]= sol[o][t]==sol[o][t+1]+1 ? 1
+                                       :(sol[o][t]==sol[o+1][t]+1?2:0);
                 next[o][t]= next[o][t]==0 && one[o]==two[t]?-1:next[o][t];
             }
         }

@@ -14,14 +14,15 @@ typedef pair<int,int> edge;
 vector<edge> minCut;
 int source = 0, sink = 1, begin = 2;
 
-//Used to add edges between seperate nodes to a graph that splits nodes int two.
+//Used to add edges between separate nodes to a graph that splits nodes int two.
 void addEdgeCap(int i, int j, int cap, int nCnt){
     int iOut = begin+nCnt+i;
     int jIn = begin+j;
     nodes[iOut][jIn] = cap;
     nodes[jIn][iOut] = 0;
 }
-//Used to add an edge between in and out nodes to a graph that splits nodes into two.
+//Used to add an edge between in and out nodes to a
+//graph that splits nodes into two.
 void addNodeCap(int i, int cap, int nCnt){
     int iIn = begin+i;
     int iOut = iIn + nCnt;
@@ -64,9 +65,9 @@ bool bfs(){
 
 int update(){
     int ret = INT_MAX;
-    for(int cur = sink, pr = prev[cur]; cur !=source; cur = prev[cur], pr = prev[cur])
+    for(int cur=sink,pr=prev[cur];cur!=source;cur=prev[cur],pr=prev[cur])
         ret = min(ret, nodes[pr][cur]);
-    for(int cur = sink, pr = prev[cur]; cur !=source; cur = prev[cur], pr = prev[cur])
+    for(int cur=sink,pr=prev[cur];cur!=source;cur=prev[cur],pr=prev[cur])
         nodes[pr][cur]-=ret, nodes[cur][pr]+=ret;
     return ret;
 }

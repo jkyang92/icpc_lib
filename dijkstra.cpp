@@ -14,7 +14,8 @@ const int mn = 100;
 node nodes[mn];
 int dist[mn];
 int prevs[mn];
-typedef pair<int,int> edge;//Contains (distance to node, node). NOT (node, node).
+//Contains (distance to node, node). NOT (node, node).
+typedef pair<int,int> edge;
 
 struct comp{
     bool operator()(const int a, const int b){
@@ -50,7 +51,7 @@ void d(int start){
 int main()
 {
     for_each(nodes, nodes + mn-1, mem_fun_ref(&node::clear));
-    
+
     nodes[0][1]=10;
     nodes[0][2]=2;
     nodes[2][3]=2;

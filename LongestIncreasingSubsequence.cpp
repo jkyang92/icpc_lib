@@ -27,9 +27,10 @@ int lis(int* nums, int len){
 
 /**
  * Same as above, but more useful because you get the numbers in the sequence
- * The index of the maximum element is maxi, and you work back from there using prev
- * Remember to reverse the list and run longest decreasing sequence if you want to
- * get the list is the right order
+ * The index of the maximum element is maxi, and you work back from there
+ * using prev
+ * Remember to reverse the list and run longest decreasing sequence if you
+ * want to get the list is the right order
  */
 int prev[30];
 int maxi;
@@ -93,19 +94,16 @@ int p[maxLength];
  * Optimized version of the algorithm
  *  Finds longest strictly increasing subsequence. O(n log k) algorithm.
  */
-int lisOptim(int* nums, int len)
-{
+int lisOptim(int* nums, int len) {
     int u, v,bsize;
-
     if (len==0) return 0;
-
     b[0]=0;
     bsize = 1;
-
     //the ending point
     for (int i = 1; i < len; i++){
-        // If next element nums[i] is greater than last element of current longest
-        // subsequence nums[b.back()], just push it at back of "b" and continue
+        // If next element nums[i] is greater than last element of current
+        // longest subsequence nums[b.back()], just push it at back of "b"
+        // and continue
         if (nums[b[bsize-1]] < nums[i]){
             //REPLACE WITH CUSTOM COMPARISON HERE IF NEEDED
             p[i] = b[bsize-1];
@@ -113,9 +111,8 @@ int lisOptim(int* nums, int len)
             bsize++;
             continue;
         }
-
-        // Binary search to find the smallest element referenced by b which is just
-        // bigger than nums[i]
+        // Binary search to find the smallest element referenced by b which
+        // is just bigger than nums[i]
         // Note : Binary search is performed on b (and not a).
         //Size of b is always <=k and hence contributes O(log k) to complexity.
         for (u = 0, v =bsize-1; u < v;){
@@ -123,7 +120,6 @@ int lisOptim(int* nums, int len)
             if (nums[b[c]] < nums[i]) u=c+1; else v=c;
             //REPLACE WITH CUSTOM COMPARISON HERE IF NEEDED
         }
-
         // Update b if new value is smaller then previously referenced value
         if (nums[i] < nums[b[u]]){//REPLACE WITH CUSTOM COMPARISON IF NEEDED
             if (u > 0)
@@ -135,8 +131,7 @@ int lisOptim(int* nums, int len)
     return bsize;
 }
 
-int main()
-{
+int main() {
     const int len = 5;
     int nums[len] = {0,10,5,20,15};
     int seqLen = lis(nums,len);
