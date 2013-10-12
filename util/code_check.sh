@@ -3,7 +3,7 @@
 echo "The following lines are too long:"
 for file in `cat ./files.lst`
 do
-    awk "{if (length(\$0) > 90) print \"$file:\",\$0 }" < $file;
+    awk "{if (length(\$0) > 80) print \"$file:\",\$0 }" < $file;
 done
 
 echo "There are tabs in the following lines:"

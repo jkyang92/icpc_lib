@@ -43,7 +43,6 @@ bool compareTo(const Point& a, const Point& b) {
         a.setVals();
     if(!b.vals)
         b.setVals();
-
     if(abs(a.cos - b.cos) > 1e-14)
         return (a.cos - b.cos)>0;
     else
@@ -58,17 +57,14 @@ void grahamScan(Point* points, int length){
         if(i==0 || p.y<minPoint.y || (p.y==minPoint.y && p.x <minPoint.x))
             minPoint = p;
     }
-
     grahamScan(points, length, minPoint);
 }
 
 //minPoint = bottom, left point
 void grahamScan(Point* points, int length, Point minPoint) {
     Point * end = points+length;
-
     sort(points, end, compareTo);
     stopPoint = &points[length-1];
-
     int m = 1;
     for(int i = 2; i < length; i++){
         while(i<length && crossProduct(points[m-1],points[m-1],points[m],points[i])<=0)
@@ -81,7 +77,7 @@ void grahamScan(Point* points, int length, Point minPoint) {
     }
 }
 
-int main(){
+int main() {
     Point points[3];
     points[0] = Point(-10000,0);
     points[1] = Point(-234,-234);
