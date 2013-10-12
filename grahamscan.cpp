@@ -1,4 +1,4 @@
-#include <cmath>
+#include <cmath>`
 #include <algorithm>
 #include <stdio.h>
 
@@ -6,7 +6,6 @@ using std::sort;
 using std::abs;
 
 struct Point;
-
 Point *stopPoint;
 
 struct Point{
@@ -54,12 +53,10 @@ bool compareTo(const Point& a, const Point& b) {
 void grahamScan(Point* points, int length, Point minPoint);
 //Find the bottom left point and run grahamScan
 void grahamScan(Point* points, int length){
-    for(int i=0; i < length;i++)
-    {
+    for(int i=0; i < length;i++){
         Point p = points[i];
         if(i==0 || p.y<minPoint.y || (p.y==minPoint.y && p.x <minPoint.x))
             minPoint = p;
-
     }
 
     grahamScan(points, length, minPoint);
@@ -75,7 +72,7 @@ void grahamScan(Point* points, int length, Point minPoint) {
     int m = 1;
     for(int i = 2; i < length; i++){
         while(i<length && crossProduct(points[m-1],points[m-1],points[m],points[i])<=0)
-            if(m==1)    //Check if first points are collinear, if so ignore unnecessary points.
+            if(m==1)//Check if first points are collinear, if so ignore unnecessary points.
                 points[m]=points[i++];
             else
                 m--;
@@ -84,24 +81,14 @@ void grahamScan(Point* points, int length, Point minPoint) {
     }
 }
 
-int main()
-{
+int main(){
     Point points[3];
     points[0] = Point(-10000,0);
     points[1] = Point(-234,-234);
     points[2] = Point(10000,0);
-    //points[3] = Point(1,0);
-    //points[4] = Point(1,-1);
-    //points[5] = Point(0,-1);
-    //points[6] = Point(-1,-1);
-    //points[7] = Point(-1,0);
-    //points[8] = Point(-1,1);
 
     grahamScan(points, 3);
     for(int i =0; points[i].x!=stopPoint->x || points[i].y!=stopPoint->y ; i++)
-    {
         printf("%lf %lf\n",points[i].x,points[i].y);
-    }
-
     printf("%lf %lf\n",stopPoint->x,stopPoint->y);
 }
